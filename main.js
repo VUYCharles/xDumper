@@ -1,6 +1,6 @@
 'use strict';
 
-const AurionScraper      = require('./src/scraper');
+const xScraper      = require('./src/scraper');
 const GoogleCalendarSync = require('./src/google-calendar');
 const config             = require('./config');
 
@@ -10,7 +10,7 @@ const config             = require('./config');
  * Execution order:
  *   1. Authenticate with Google Calendar and verify calendar access.
  *   2. Delete all future events previously created by this tool.
- *   3. Connect to Aurion and navigate to the timetable page.
+ *   3. Connect to x and navigate to the timetable page.
  *   4. For each target week: download the ICS, parse it, insert
  *      events into Google Calendar before moving to the next week.
  *
@@ -20,18 +20,18 @@ const config             = require('./config');
  * two weeks share an overlapping time range boundary.
  *
  * Processing is intentionally sequential — one week at a time — to
- * avoid overwhelming the Aurion server and to allow partial results
+ * avoid overwhelming the x server and to allow partial results
  * to be written to Google Calendar in case the process is interrupted.
  */
 async function main() {
   const startTime = Date.now();
 
   console.log('');
-  console.log('aurion-gcal — timetable sync');
+  console.log('x-gcal — timetable sync');
   console.log(`Started: ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}`);
   console.log('');
 
-  const scraper = new AurionScraper(config);
+  const scraper = new xScraper(config);
   const gcal    = new GoogleCalendarSync(config);
 
   try {
@@ -62,7 +62,7 @@ async function main() {
     await gcal.deleteAllInRange(today.toISOString(), farFuture.toISOString());
 
     // ------------------------------------------------------------------
-    // Step 3: Connect to Aurion
+    // Step 3: Connect to x
     // ------------------------------------------------------------------
     console.log('');
     console.log(
@@ -70,7 +70,7 @@ async function main() {
     );
     console.log('');
 
-    console.log('[main] Connecting to Aurion...');
+    console.log('[main] Connecting to x...');
     await scraper.init();
     await scraper.login();
     await scraper.navigateToPlanning();
