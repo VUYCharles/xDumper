@@ -20,7 +20,7 @@ async function main() {
   const startTime = Date.now();
 
   console.log('');
-  console.log('aurion-gcal — calendar consolidation');
+  console.log('x-gcal — calendar consolidation');
   console.log(`Started: ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}`);
   console.log('');
 
