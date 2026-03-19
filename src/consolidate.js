@@ -8,7 +8,7 @@ const path = require('path');
  * CalendarConsolidator
  *
  * Reads all future events from the source calendar (created by
- * aurion-gcal), merges consecutive events separated by 20 minutes
+ * x-gcal), merges consecutive events separated by 20 minutes
  * or less into single blocks, and writes the result to a separate
  * destination calendar.
  *
@@ -20,7 +20,7 @@ const path = require('path');
  *   of the merged event lists all constituent titles.
  *
  * The destination calendar is cleared (for the same time range)
- * before each write, using the same source=aurion-consolidated tag
+ * before each write, using the same source=x-consolidated tag
  * used at insertion time.
  */
 class CalendarConsolidator {
@@ -94,7 +94,7 @@ class CalendarConsolidator {
         singleEvents:            true,
         orderBy:                 'startTime',
         maxResults:              500,
-        privateExtendedProperty: 'source=aurion-scraper',
+        privateExtendedProperty: 'source=x-scraper',
       };
       if (pageToken) params.pageToken = pageToken;
 
@@ -170,7 +170,7 @@ class CalendarConsolidator {
       start:       { dateTime: block.start.toISOString(), timeZone: 'Europe/Paris' },
       end:         { dateTime: block.end.toISOString(),   timeZone: 'Europe/Paris' },
       extendedProperties: {
-        private: { source: 'aurion-consolidated' },
+        private: { source: 'x-consolidated' },
       },
     };
 
@@ -193,7 +193,7 @@ class CalendarConsolidator {
         timeMax,
         singleEvents:            true,
         maxResults:              500,
-        privateExtendedProperty: 'source=aurion-consolidated',
+        privateExtendedProperty: 'source=x-consolidated',
       };
       if (pageToken) params.pageToken = pageToken;
 
