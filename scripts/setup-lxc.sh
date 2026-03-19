@@ -1,7 +1,7 @@
 #!/bin/bash
 # setup-lxc.sh
 #
-# Installs aurion-gcal on an Ubuntu 22.04 LXC container.
+# Installs x-gcal on an Ubuntu 22.04 LXC container.
 #
 # Tested on Proxmox VE 8/9 with an unprivileged LXC container.
 # The container must have the "nesting" feature enabled
@@ -119,9 +119,9 @@ NODE_BIN="$(command -v node)"
 DOTENV_LOAD=""
 [ -f "${INSTALL_DIR}/.env" ] && DOTENV_LOAD="EnvironmentFile=${INSTALL_DIR}/.env"
 
-cat > /etc/systemd/system/aurion-gcal.service << SERVICEEOF
+cat > /etc/systemd/system/x-gcal.service << SERVICEEOF
 [Unit]
-Description=aurion-gcal — Aurion ENAC timetable sync
+Description=x-gcal — x x timetable sync
 After=network-online.target
 Wants=network-online.target
 
@@ -137,10 +137,10 @@ ${DOTENV_LOAD}
 WantedBy=multi-user.target
 SERVICEEOF
 
-cat > /etc/systemd/system/aurion-gcal.timer << TIMEREOF
+cat > /etc/systemd/system/x-gcal.timer << TIMEREOF
 [Unit]
-Description=Run aurion-gcal daily at 04:00
-Requires=aurion-gcal.service
+Description=Run x-gcal daily at 04:00
+Requires=x-gcal.service
 
 [Timer]
 OnCalendar=*-*-* 04:00:00
@@ -151,7 +151,7 @@ WantedBy=timers.target
 TIMEREOF
 
 systemctl daemon-reload
-systemctl enable aurion-gcal.timer
+systemctl enable x-gcal.timer
 ok "systemd service and timer configured (daily at 04:00)"
 
 # --- Summary -------------------------------------------------------------------
@@ -171,8 +171,8 @@ echo "  3. Run a manual sync to verify the setup:"
 echo "       node ${INSTALL_DIR}/main.js"
 echo ""
 echo "  4. Enable the daily sync:"
-echo "       systemctl start aurion-gcal.timer"
-echo "       systemctl status aurion-gcal.timer"
+echo "       systemctl start x-gcal.timer"
+echo "       systemctl status x-gcal.timer"
 echo ""
 echo "  5. Monitor the logs:"
 echo "       tail -f ${INSTALL_DIR}/logs/sync.log"
