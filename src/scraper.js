@@ -12,14 +12,14 @@ const DEBUG_DIR = path.join(__dirname, '../debug');
 if (!fs.existsSync(DEBUG_DIR)) fs.mkdirSync(DEBUG_DIR, { recursive: true });
 
 /**
- * AurionScraper
+ * xScraper
  *
- * Navigates the Aurion ENAC timetable application and downloads
+ * Navigates the x x timetable application and downloads
  * per-week ICS calendar data.
  *
  * Technical notes:
  *
- * Aurion is built on PrimeFaces (JSF). Every page carries a
+ * x is built on PrimeFaces (JSF). Every page carries a
  * javax.faces.ViewState token that is consumed on each POST and
  * regenerated in the response. Reusing a stale ViewState causes
  * the server to silently ignore the requested week and return the
@@ -40,13 +40,13 @@ if (!fs.existsSync(DEBUG_DIR)) fs.mkdirSync(DEBUG_DIR, { recursive: true });
  * still encodes the original week, so the ICS export always
  * returns the same data regardless of what form:week contains.
  */
-class AurionScraper {
+class xScraper {
   constructor(config) {
     this.config       = config;
     this.browser      = null;
     this.page         = null;
     this._step        = 0;
-    this._planningUrl = 'https://aurion-prod.enac.fr/faces/Planning.xhtml';
+    this._planningUrl = 'https://x-prod.x.fr/faces/Planning.xhtml';
   }
 
   // ---------------------------------------------------------------------------
@@ -123,9 +123,9 @@ class AurionScraper {
   // ---------------------------------------------------------------------------
 
   async login() {
-    this._log(`Navigating to login page: ${this.config.aurionUrl}`);
+    this._log(`Navigating to login page: ${this.config.xUrl}`);
 
-    await this.page.goto(this.config.aurionUrl, {
+    await this.page.goto(this.config.xUrl, {
       waitUntil: 'networkidle2',
       timeout: 30000,
     });
@@ -179,7 +179,7 @@ class AurionScraper {
       this._log('form:week absent — navigating via sidebar');
 
       await this.page.goto(
-        'https://aurion-prod.enac.fr/faces/MainMenuPage.xhtml',
+        'https://x-prod.x.fr/faces/MainMenuPage.xhtml',
         { waitUntil: 'networkidle2', timeout: 30000 }
       );
 
@@ -382,14 +382,14 @@ class AurionScraper {
       const { default: fetch } = await import('node-fetch');
 
       const response = await fetch(
-        'https://aurion-prod.enac.fr/faces/Planning.xhtml',
+        'https://x-prod.x.fr/faces/Planning.xhtml',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie':        cookieStr,
-            'Referer':       'https://aurion-prod.enac.fr/faces/Planning.xhtml',
-            'Origin':        'https://aurion-prod.enac.fr',
+            'Referer':       'https://x-prod.x.fr/faces/Planning.xhtml',
+            'Origin':        'https://x-prod.x.fr',
             'User-Agent':    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept':        'text/html,application/xhtml+xml,*/*',
           },
@@ -516,4 +516,4 @@ class AurionScraper {
   }
 }
 
-module.exports = AurionScraper;
+module.exports = xScraper;
