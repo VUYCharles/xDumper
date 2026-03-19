@@ -1,7 +1,7 @@
 'use strict';
 
 const readline = require('readline');
-const AurionScraper      = require('./src/scraper');
+const xScraper      = require('./src/scraper');
 const GoogleCalendarSync = require('./src/google-calendar');
 
 /**
@@ -58,15 +58,15 @@ function askHidden(question) {
 
 async function main() {
   console.log('');
-  console.log('aurion-gcal — one-shot sync');
+  console.log('x-gcal — one-shot sync');
   console.log('');
 
   // --- Collect credentials ---------------------------------------------------
 
-  const aurionUrl = 'https://aurion-prod.enac.fr/faces/Login.xhtml';
+  const xUrl = 'https://x-prod.x.fr/faces/Login.xhtml';
 
-  const username     = await ask('Aurion username (email): ');
-  const password     = await askHidden('Aurion password: ');
+  const username     = await ask('x username (email): ');
+  const password     = await askHidden('x password: ');
 
   console.log('');
   console.log('Google OAuth2 credentials');
@@ -90,7 +90,7 @@ async function main() {
   // --- Build config object ---------------------------------------------------
 
   const config = {
-    aurionUrl,
+    xUrl,
     username,
     password,
     weeksToScrape,
@@ -108,7 +108,7 @@ async function main() {
 
   // --- Run sync --------------------------------------------------------------
 
-  const scraper = new AurionScraper(config);
+  const scraper = new xScraper(config);
   const gcal    = new GoogleCalendarSync(config);
 
   try {
