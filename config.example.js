@@ -1,5 +1,5 @@
 /**
- * aurion-gcal configuration
+ * x-gcal configuration
  *
  * Copy this file to config.js and fill in your credentials.
  * config.js is listed in .gitignore and must never be committed.
@@ -8,11 +8,11 @@
  */
 
 // ---------------------------------------------------------------------------
-// Aurion credentials
+// x credentials
 // ---------------------------------------------------------------------------
 
-const aurionUrl = 'https://aurion-prod.enac.fr/faces/Login.xhtml';
-const username  = 'firstname.lastname@enac.fr';
+const xUrl = 'https://x-prod.x.fr/faces/Login.xhtml';
+const username  = 'firstname.lastname@x.fr';
 const password  = 'your_password';
 
 // Number of weeks to synchronise starting from the current week.
@@ -68,7 +68,7 @@ const oauth2Credentials = {
 // Optional: Tor proxy
 //
 // Some hosting providers (e.g. OVH) have their IP ranges blocked by
-// Aurion. Enable Tor to route traffic through an anonymous circuit.
+// x. Enable Tor to route traffic through an anonymous circuit.
 // Requires the `tor` package: apt install tor
 // ---------------------------------------------------------------------------
 const useTor  = false;
@@ -83,7 +83,7 @@ const consolidatedCalendarId  = 'id2'; // ID de l'agenda de destination
 const consolidationGapMinutes = 20;    // seuil de fusion en minutes
 
 module.exports = {
-  aurionUrl,
+  xUrl,
   username,
   password,
   weeksToScrape,
